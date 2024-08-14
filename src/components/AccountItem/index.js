@@ -10,7 +10,7 @@ function AccountItem() {
         <div className={cx('wrapper')}>
             <img
                 className={cx('avatar')}
-                src="https://scontent.fsgn18-1.fna.fbcdn.net/v/t39.30808-1/425454982_2146502805724426_3213295022834966388_n.jpg?stp=dst-jpg_p200x200&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=qsh1i2zbhlEQ7kNvgFvfWe2&_nc_ht=scontent.fsgn18-1.fna&oh=00_AYBGzhlyxCRaFG7OIJKiwpmOBLI1-8hLQKsj_R6WaF1wnA&oe=66B3C8D9"
+                src="https://scontent.fsgn18-1.fna.fbcdn.net/v/t39.30808-1/412912943_2094957970854208_8237656501665238034_n.jpg?stp=dst-jpg_p200x200&_nc_cat=101&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=IyTQyL0_3xoQ7kNvgFwawC5&_nc_ht=scontent.fsgn18-1.fna&oh=00_AYAAisXziYwenbS0htkTHgM2r0mllK0cRIs4ZJroAnor5A&oe=66C285C8"
                 alt="Boi"
             />
             <div className={cx('info')}>
