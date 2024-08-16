@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
-import Tippy from '@tippyjs/react/headless';
+import Tippy from '@tippyjs/react';
+import HeadlessTippy from '@tippyjs/react/headless';
 import Button from '~/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -12,10 +13,17 @@ import {
     faLanguage,
     faCircleQuestion,
     faKeyboard,
+    faCloudUpload,
+    faMessage,
+    faUser,
+    faCoins,
+    faGear,
+    faSignOut,
 } from '@fortawesome/free-solid-svg-icons';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
 import Menu from '~/components/Popper/Menu';
+import 'tippy.js/dist/tippy.css';
 
 const cx = classNames.bind(styles);
 const MENU_ITEMS = [
@@ -50,6 +58,8 @@ const MENU_ITEMS = [
 function Header() {
     const [searchResult, setSearchResult] = useState([]);
 
+    const currenUser = true;
+
     useEffect(() => {
         setTimeout(() => {
             setSearchResult([]);
@@ -64,7 +74,30 @@ function Header() {
         }
     };
 
-    const currenUser = true;
+    const userMenu = [
+        {
+            icon: <FontAwesomeIcon icon={faUser} />,
+            title: 'View profile',
+            to: '/@iobsssss',
+        },
+        {
+            icon: <FontAwesomeIcon icon={faCoins} />,
+            title: 'Get Coins',
+            to: '/coin',
+        },
+        {
+            icon: <FontAwesomeIcon icon={faGear} />,
+            title: 'Settings',
+            to: '/settings',
+        },
+        ...MENU_ITEMS,
+        {
+            icon: <FontAwesomeIcon icon={faSignOut} />,
+            title: 'Log out',
+            to: '/logout',
+            separate: true, //thêm css, xem bên MenuItem.js
+        },
+    ];
 
     return (
         <header className={cx('wrapper')}>
@@ -103,7 +136,7 @@ function Header() {
                         d="M91.58 28.887a3.94 3.94 0 0 1-3.94-3.945 3.94 3.94 0 1 1 7.882 0c0 2.18-1.77 3.945-3.942 3.945m0-12.058c-4.477 0-8.106 3.631-8.106 8.113s3.629 8.113 8.106 8.113 8.106-3.631 8.106-8.113-3.628-8.113-8.106-8.113"
                     ></path>
                 </svg>
-                <Tippy
+                <HeadlessTippy
                     interactive
                     visible={searchResult.length > 0}
                     render={(attrs) => (
@@ -129,21 +162,37 @@ function Header() {
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
                         </button>
                     </div>
-                </Tippy>
+                </HeadlessTippy>
 
-                {currenUser ? (
-                    <div className={cx('current-user')}></div>
-                ) : (
-                    <div className={cx('actions')}>
-                        <Button text>Upload</Button>
-                        <Button primary>Log in</Button>
-                        <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
+                <div className={cx('actions')}>
+                    {currenUser ? (
+                        <>
+                            <Tippy delay={[0, 200]} placement="bottom" content="Upload video">
+                                <button className={cx('action-btn')}>
+                                    <FontAwesomeIcon icon={faCloudUpload} />
+                                </button>
+                            </Tippy>
+                        </>
+                    ) : (
+                        <>
+                            <Button text>Upload</Button>
+                            <Button primary>Log in</Button>
+                        </>
+                    )}
+                    <Menu items={currenUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
+                        {currenUser ? (
+                            <img
+                                src="https://scontent.fsgn18-1.fna.fbcdn.net/v/t39.30808-1/412912943_2094957970854208_8237656501665238034_n.jpg?stp=dst-jpg_p200x200&_nc_cat=101&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=IyTQyL0_3xoQ7kNvgFwawC5&_nc_ht=scontent.fsgn18-1.fna&oh=00_AYAAisXziYwenbS0htkTHgM2r0mllK0cRIs4ZJroAnor5A&oe=66C285C8"
+                                className={cx('user-avatar')}
+                                alt="Huy Cường"
+                            />
+                        ) : (
                             <button className={cx('more-btn')}>
                                 <FontAwesomeIcon icon={faEllipsisVertical} />
                             </button>
-                        </Menu>
-                    </div>
-                )}
+                        )}
+                    </Menu>
+                </div>
             </div>
         </header>
     );
